@@ -1,0 +1,36 @@
+/**
+ * File: 
+ * Description: 
+ * Author: linzhehuang
+ * Blog: http://www.cnblogs.com/linzhehuang/
+ * Version: 0.0.1
+ * History: 
+ *   2017.5.4 创建该文件
+ */
+
+/* Function: 
+ * Description: 
+ * Parma: 
+ *   -
+ * Return: 
+ */
+
+
+----------------以下为注释解释------------------
+/**
+ * File: 文件名称
+ * Description: 文件描述
+ * Author: linzhehuang
+ * Blog: http://www.cnblogs.com/linzhehuang/
+ * Version: 0.0.1
+ * History: 
+ *   2017.5.4 创建该文件
+ */
+
+/* Function: 函数名
+ * Description: 函数描述
+ * Parma: 参数，若无为None
+ *   parma1-必选参数描述
+ *   [parma2]-可选参数描述，默认值XXX
+ * Return: 返回值，若无为None
+ */
