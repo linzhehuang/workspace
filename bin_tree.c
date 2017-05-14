@@ -1,21 +1,21 @@
 /**
  * File: bin_tree.c
- * Description: å®ç°äºŒå‰æ ‘çš„åˆ›å»ºï¼ˆéé€’å½’ï¼‰ã€éå†
- * ï¼ˆå…ˆåºã€ä¸­åºã€ååºï¼‰ã€è®¡ç®—å¶å­èŠ‚ç‚¹ä¸ªæ•°
+ * Description: ÊµÏÖ¶ş²æÊ÷µÄ´´½¨£¨·Çµİ¹é£©¡¢ÖĞĞò±éÀú
+ * £¨·Çµİ¹é£©¡¢¼ÆËãÒ¶×Ó½Úµã¸öÊı£¨µİ¹é£©
  * Author: linzhehuang
  * Blog: http://www.cnblogs.com/linzhehuang/
- * Version: 0.0.1
- * Date: 2017.5.7
+ * Version: 0.0.2
+ * Date: 2017.5.14
  */
 #include "bin_tree.h"
 
 BOOL create_bin_tree(BIN_TREE *root)
 {
-  /* åˆ›å»ºæ ¹èŠ‚ç‚¹ */
+  /* ´´½¨¸ù½Úµã */
   DATA_TYPE data = '\0';
   scanf("%c",&data);
   if(data == '#'){
-    return FALSE; // æ ¹èŠ‚ç‚¹ä¸ºç©ºï¼Œåˆ›å»ºå¤±è´¥
+    return FALSE; // ¸ù½ÚµãÎª¿Õ£¬´´½¨Ê§°Ü
   }
   else
   {
@@ -25,40 +25,40 @@ BOOL create_bin_tree(BIN_TREE *root)
     (*root)->right_subtree = NULL;
   }
   
-  /* åˆ›å»ºéæ ¹èŠ‚ç‚¹ */
-  // å­˜æ”¾çˆ¶å±‚çš„èŠ‚ç‚¹åˆ—è¡¨
+  /* ´´½¨·Ç¸ù½Úµã */
+  // ´æ·Å¸¸²ãµÄ½ÚµãÁĞ±í
   NODE **parent_list = (NODE**)malloc(sizeof(NODE*));
   parent_list[0] = *root;
-  // çˆ¶èŠ‚ç‚¹ä¸ªæ•°
+  // ¸¸½Úµã¸öÊı
   int parent_amount = 1;  
   
   while(1)
   {
-    // å½“å‰èŠ‚ç‚¹ä¸ªæ•°ï¼Œè®¾ç½®ä¸ºçˆ¶èŠ‚ç‚¹ä¸ªæ•°çš„ä¸¤å€
+    // µ±Ç°½Úµã¸öÊı£¬ÉèÖÃÎª¸¸½Úµã¸öÊıµÄÁ½±¶
     int current_amount = parent_amount * 2;
-    // åˆ›å»ºä¸´æ—¶åˆ—è¡¨å­˜æ”¾å½“å‰æ·±åº¦çš„èŠ‚ç‚¹
+    // ´´½¨ÁÙÊ±ÁĞ±í´æ·Åµ±Ç°Éî¶ÈµÄ½Úµã
     NODE **tmp_list = (NODE**)malloc(sizeof(NODE*)
     * current_amount);
-    // ç”¨äºè®°å½•å½“å‰æ·±åº¦èŠ‚ç‚¹éç©ºèŠ‚ç‚¹ä¸ªæ•°
+    // ÓÃÓÚ¼ÇÂ¼µ±Ç°Éî¶È½Úµã·Ç¿Õ½Úµã¸öÊı
     int count = 0;
-    // åˆ›å»ºå½“å‰å±‚æ¬¡çš„æ‰€æœ‰èŠ‚ç‚¹
+    // ´´½¨µ±Ç°²ã´ÎµÄËùÓĞ½Úµã
     int j = 0;
     for(;j < current_amount;++j)
     {
       DATA_TYPE data = '\0';
       scanf("%c",&data);
-      if(data != '#')  // ä¸ä¸ºç©ºèŠ‚ç‚¹
+	  if(data != '#')  // ²»Îª¿Õ½Úµã
       {
-        // æ–°å»ºèŠ‚ç‚¹å¹¶èµ‹å€¼
+        // ĞÂ½¨½Úµã²¢¸³Öµ
         NODE *current_node = (NODE*)malloc(sizeof(NODE));
         current_node->data = data;
         current_node->left_subtree = NULL;
         current_node->right_subtree = NULL;
-        // åŠ å…¥åˆ°ä¸´æ—¶åˆ—è¡¨ä¸­
+        // ¼ÓÈëµ½ÁÙÊ±ÁĞ±íÖĞ
         tmp_list[count] = current_node;
-        // éç©ºèŠ‚ç‚¹æ•°åŠ 1
+        // ·Ç¿Õ½ÚµãÊı¼Ó1
         count++;
-        // ä¸çˆ¶èŠ‚ç‚¹å»ºç«‹å…³ç³»
+        // Óë¸¸½Úµã½¨Á¢¹ØÏµ
         if(j%2 == LEFT)
         {
           (parent_list[j/2])->left_subtree = current_node;
@@ -68,34 +68,94 @@ BOOL create_bin_tree(BIN_TREE *root)
           (parent_list[j/2])->right_subtree = current_node;
         }
       }
-    }  // forå¾ªç¯ç»“æŸ
+    }  // forÑ­»·½áÊø
     
-    // é‡Šæ”¾çˆ¶å±‚åˆ—è¡¨
+    // ÊÍ·Å¸¸²ãÁĞ±í
     free(parent_list);
-    // æ›´æ–°çˆ¶å±‚åˆ—è¡¨
+    // ¸üĞÂ¸¸²ãÁĞ±í
     parent_list = tmp_list;
-    // è‹¥éç©ºèŠ‚ç‚¹æ•°ä¸º0ï¼Œåˆ™åœæ­¢åˆ›å»º
+	// ¸üĞÂ¸¸½ÚµãÊı
+	parent_amount = count;
+    // Èô·Ç¿Õ½ÚµãÊıÎª0£¬ÔòÍ£Ö¹´´½¨
     if(count == 0) break;
   }
   return TRUE;
 }
-BOOL traversal(BIN_TREE *root)
+BOOL traversal(BIN_TREE root)
 {
-  // æ–°å»ºä¸€ä¸ªæ ˆ
+  // ¼ì²é²ÎÊı
+  if(!root) return FALSE;
+  // ĞÂ½¨Ò»¸öÕ»
   STACK stack = {NULL,0};
-  // å…¥æ ˆ
+  // ÈëÕ»
   BOOL push(NODE **node)
   {
 	stack.top++;
-	//if(!stack.stack) stack.stack = (NODE**)malloc(sizeof(NODE*));
-	//else stack.stack = (NODE**)realloc(sizeof(NODE*) * stack.top);
-	//stack.stack[stack.top-1] = *node;
+	if(!stack.stack) stack.stack = (NODE**)malloc(sizeof(NODE*));
+	else stack.stack = (NODE**)realloc(stack.stack,sizeof(NODE*) * stack.top);
+	stack.stack[stack.top-1] = *node;
+	return TRUE;
   }
-  push(root);
+  // ³öÕ»
+  BOOL pop()
+  {
+	stack.top--;
+	stack.stack = (NODE**)realloc(stack.stack,sizeof(NODE*) * stack.top);
+	return TRUE;
+  }
+  // È¡µÃÕ»¶¥ÔªËØ
+  NODE *top()
+  {
+	return stack.stack[stack.top-1];
+  }
+  // Õ»ÊÇ·ñÎª¿Õ
+  BOOL is_empty()
+  {
+	if(stack.top == 0) return TRUE;
+	else return FALSE;
+  }
+  // ¿ªÊ¼±éÀú
+  NODE *p = root;
+  while(p || !is_empty())
+  {  
+    while(p)
+    {
+      push(&p);
+      p = p->left_subtree;  
+    }
+    p = top();  
+    pop();
+    printf("%c",p->data);  
+    p = p->right_subtree;
+  }
+  return TRUE;
+}
+int get_leaf_amount(BIN_TREE root)
+{
+  if(!root)
+  {
+	return 0;
+  }
+  else if(!root->left_subtree && !root->right_subtree)
+  {
+	return 1;
+  }
+  else
+  {
+	return get_leaf_amount(root->left_subtree) + 
+	get_leaf_amount(root->right_subtree);
+  }
 }
 int main()
 {
   BIN_TREE tree = NULL;
+  printf("°´´ÓÉÏµ½ÏÂ¡¢´Ó×óµ½ÓÒµÄË³Ğò´´½¨£¬\
+\"#\"´ú±í¿Õ½Úµã¡£Àı×ÓÈçÏÂ£º\n");
+  printf("   A\n  /  \\\n B   C\n /\nD\n");
+  printf("´ËÊ±Ó¦ÊäÈë£ºABCD#####\n");
+  
   create_bin_tree(&tree);
-  //traversal(&root);
+  printf("ÖĞĞò±éÀú½á¹û£º");
+  traversal(tree);
+  printf("\nÒ¶×Ó½ÚµãÊı£º%d",get_leaf_amount(tree));
 }
