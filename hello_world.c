@@ -4,8 +4,7 @@
  * Author: linzhehuang
  * Blog: http://www.cnblogs.com/linzhehuang/
  * Version: 0.0.1
- * History: 
- *   2017.5.4 创建该文件
+ * Date: 2017.5.4
  */
 #include <stdio.h>
 int main(void){
