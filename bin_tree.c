@@ -1,7 +1,7 @@
 /**
  * File: bin_tree.c
- * Description: ÊµÏÖ¶ş²æÊ÷µÄ´´½¨£¨·Çµİ¹é£©¡¢ÖĞĞò±éÀú
- * £¨·Çµİ¹é£©¡¢¼ÆËãÒ¶×Ó½Úµã¸öÊı£¨µİ¹é£©
+ * Description: å®ç°äºŒå‰æ ‘çš„åˆ›å»ºï¼ˆéé€’å½’ï¼‰ã€ä¸­åºéå†
+ * ï¼ˆéé€’å½’ï¼‰ã€è®¡ç®—å¶å­èŠ‚ç‚¹ä¸ªæ•°ï¼ˆé€’å½’ï¼‰
  * Author: linzhehuang
  * Blog: http://www.cnblogs.com/linzhehuang/
  * Version: 0.0.2
@@ -11,11 +11,11 @@
 
 BOOL create_bin_tree(BIN_TREE *root)
 {
-  /* ´´½¨¸ù½Úµã */
+  /* åˆ›å»ºæ ¹èŠ‚ç‚¹ */
   DATA_TYPE data = '\0';
   scanf("%c",&data);
   if(data == '#'){
-    return FALSE; // ¸ù½ÚµãÎª¿Õ£¬´´½¨Ê§°Ü
+    return FALSE; // æ ¹èŠ‚ç‚¹ä¸ºç©ºï¼Œåˆ›å»ºå¤±è´¥
   }
   else
   {
@@ -25,40 +25,40 @@ BOOL create_bin_tree(BIN_TREE *root)
     (*root)->right_subtree = NULL;
   }
   
-  /* ´´½¨·Ç¸ù½Úµã */
-  // ´æ·Å¸¸²ãµÄ½ÚµãÁĞ±í
+  /* åˆ›å»ºéæ ¹èŠ‚ç‚¹ */
+  // å­˜æ”¾çˆ¶å±‚çš„èŠ‚ç‚¹åˆ—è¡¨
   NODE **parent_list = (NODE**)malloc(sizeof(NODE*));
   parent_list[0] = *root;
-  // ¸¸½Úµã¸öÊı
+  // çˆ¶èŠ‚ç‚¹ä¸ªæ•°
   int parent_amount = 1;  
   
   while(1)
   {
-    // µ±Ç°½Úµã¸öÊı£¬ÉèÖÃÎª¸¸½Úµã¸öÊıµÄÁ½±¶
+    // å½“å‰èŠ‚ç‚¹ä¸ªæ•°ï¼Œè®¾ç½®ä¸ºçˆ¶èŠ‚ç‚¹ä¸ªæ•°çš„ä¸¤å€
     int current_amount = parent_amount * 2;
-    // ´´½¨ÁÙÊ±ÁĞ±í´æ·Åµ±Ç°Éî¶ÈµÄ½Úµã
+    // åˆ›å»ºä¸´æ—¶åˆ—è¡¨å­˜æ”¾å½“å‰æ·±åº¦çš„èŠ‚ç‚¹
     NODE **tmp_list = (NODE**)malloc(sizeof(NODE*)
     * current_amount);
-    // ÓÃÓÚ¼ÇÂ¼µ±Ç°Éî¶È½Úµã·Ç¿Õ½Úµã¸öÊı
+    // ç”¨äºè®°å½•å½“å‰æ·±åº¦èŠ‚ç‚¹éç©ºèŠ‚ç‚¹ä¸ªæ•°
     int count = 0;
-    // ´´½¨µ±Ç°²ã´ÎµÄËùÓĞ½Úµã
+    // åˆ›å»ºå½“å‰å±‚æ¬¡çš„æ‰€æœ‰èŠ‚ç‚¹
     int j = 0;
     for(;j < current_amount;++j)
     {
       DATA_TYPE data = '\0';
       scanf("%c",&data);
-	  if(data != '#')  // ²»Îª¿Õ½Úµã
+	  if(data != '#')  // ä¸ä¸ºç©ºèŠ‚ç‚¹
       {
-        // ĞÂ½¨½Úµã²¢¸³Öµ
+        // æ–°å»ºèŠ‚ç‚¹å¹¶èµ‹å€¼
         NODE *current_node = (NODE*)malloc(sizeof(NODE));
         current_node->data = data;
         current_node->left_subtree = NULL;
         current_node->right_subtree = NULL;
-        // ¼ÓÈëµ½ÁÙÊ±ÁĞ±íÖĞ
+        // åŠ å…¥åˆ°ä¸´æ—¶åˆ—è¡¨ä¸­
         tmp_list[count] = current_node;
-        // ·Ç¿Õ½ÚµãÊı¼Ó1
+        // éç©ºèŠ‚ç‚¹æ•°åŠ 1
         count++;
-        // Óë¸¸½Úµã½¨Á¢¹ØÏµ
+        // ä¸çˆ¶èŠ‚ç‚¹å»ºç«‹å…³ç³»
         if(j%2 == LEFT)
         {
           (parent_list[j/2])->left_subtree = current_node;
@@ -68,26 +68,26 @@ BOOL create_bin_tree(BIN_TREE *root)
           (parent_list[j/2])->right_subtree = current_node;
         }
       }
-    }  // forÑ­»·½áÊø
+    }  // forå¾ªç¯ç»“æŸ
     
-    // ÊÍ·Å¸¸²ãÁĞ±í
+    // é‡Šæ”¾çˆ¶å±‚åˆ—è¡¨
     free(parent_list);
-    // ¸üĞÂ¸¸²ãÁĞ±í
+    // æ›´æ–°çˆ¶å±‚åˆ—è¡¨
     parent_list = tmp_list;
-	// ¸üĞÂ¸¸½ÚµãÊı
+	// æ›´æ–°çˆ¶èŠ‚ç‚¹æ•°
 	parent_amount = count;
-    // Èô·Ç¿Õ½ÚµãÊıÎª0£¬ÔòÍ£Ö¹´´½¨
+    // è‹¥éç©ºèŠ‚ç‚¹æ•°ä¸º0ï¼Œåˆ™åœæ­¢åˆ›å»º
     if(count == 0) break;
   }
   return TRUE;
 }
 BOOL traversal(BIN_TREE root)
 {
-  // ¼ì²é²ÎÊı
+  // æ£€æŸ¥å‚æ•°
   if(!root) return FALSE;
-  // ĞÂ½¨Ò»¸öÕ»
+  // æ–°å»ºä¸€ä¸ªæ ˆ
   STACK stack = {NULL,0};
-  // ÈëÕ»
+  // å…¥æ ˆ
   BOOL push(NODE **node)
   {
 	stack.top++;
@@ -96,25 +96,25 @@ BOOL traversal(BIN_TREE root)
 	stack.stack[stack.top-1] = *node;
 	return TRUE;
   }
-  // ³öÕ»
+  // å‡ºæ ˆ
   BOOL pop()
   {
 	stack.top--;
 	stack.stack = (NODE**)realloc(stack.stack,sizeof(NODE*) * stack.top);
 	return TRUE;
   }
-  // È¡µÃÕ»¶¥ÔªËØ
+  // å–å¾—æ ˆé¡¶å…ƒç´ 
   NODE *top()
   {
 	return stack.stack[stack.top-1];
   }
-  // Õ»ÊÇ·ñÎª¿Õ
+  // æ ˆæ˜¯å¦ä¸ºç©º
   BOOL is_empty()
   {
 	if(stack.top == 0) return TRUE;
 	else return FALSE;
   }
-  // ¿ªÊ¼±éÀú
+  // å¼€å§‹éå†
   NODE *p = root;
   while(p || !is_empty())
   {  
@@ -149,13 +149,12 @@ int get_leaf_amount(BIN_TREE root)
 int main()
 {
   BIN_TREE tree = NULL;
-  printf("°´´ÓÉÏµ½ÏÂ¡¢´Ó×óµ½ÓÒµÄË³Ğò´´½¨£¬\
-\"#\"´ú±í¿Õ½Úµã¡£Àı×ÓÈçÏÂ£º\n");
+  printf("The example as follow(# stand for empty node):\n");
   printf("   A\n  /  \\\n B   C\n /\nD\n");
-  printf("´ËÊ±Ó¦ÊäÈë£ºABCD#####\n");
+  printf("Input:ABCD#####\n");
   
   create_bin_tree(&tree);
-  printf("ÖĞĞò±éÀú½á¹û£º");
+  printf("Inorder Traversal:");
   traversal(tree);
-  printf("\nÒ¶×Ó½ÚµãÊı£º%d",get_leaf_amount(tree));
+  printf("\nLeaves amount:%d",get_leaf_amount(tree));
 }

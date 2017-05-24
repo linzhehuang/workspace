@@ -6,6 +6,7 @@
  * Version: 0.0.1
  * Date: 2017.5.18
  */
+// 2017.5.18 先停止编写此算法
 #include <stdio.h>
 #define MAX_X 10
 #define MAX_Y 6
@@ -21,17 +22,6 @@ void index2pos(int index,int *x,int *y)
 }
 int main()
 {
-  int index , x , y;
-  index = 0;
-  x = 2;
-  y = 1;
   
-  pos2index(&index,x,y);
-  printf("index = %d",index);
-  
-  x = 0;
-  y = 0;
-  index2pos(index,&x,&y);
-  printf(" %d,%d",x,y);
   return 0;
 }
