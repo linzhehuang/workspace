@@ -7,31 +7,29 @@
  * Date: 2017.5.18
  */
 #include <stdio.h>
-#define MAX_X 10
-#define MAX_Y 6
-
+#define MAX_X 5
+#define MAX_Y 3
+/*
+0 1 2 3 4 max_x*y +
+0 1 2 3 4 x+0(y)
+---------
+5 6 7 8 9 max_x*y +
+0 1 2 3 4 x+1(y)
+---------
+10 11 12 13 14 max_x*y +
+0  1  2  3  4  x+2(y)
+*/
 void pos2index(int *index,int x,int y)
 {
-  *index  = (y * (MAX_X-1)) + x;
+  *index  = (y * MAX_X) + x;
 }
 void index2pos(int index,int *x,int *y)
 {
-  *y = (index / (MAX_X-1)) - 1;
-  *x = index - (*y * (MAX_X-1));
+  *y = index / MAX_X;
+  *x = index % MAX_X;
 }
 int main()
 {
-  int index , x , y;
-  index = 0;
-  x = 2;
-  y = 1;
   
-  pos2index(&index,x,y);
-  printf("index = %d",index);
-  
-  x = 0;
-  y = 0;
-  index2pos(index,&x,&y);
-  printf(" %d,%d",x,y);
   return 0;
 }
