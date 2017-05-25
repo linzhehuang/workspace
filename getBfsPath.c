@@ -1,23 +1,4 @@
-typedef enum bool {
-  FALSE = 0,
-  TRUE = 1
-} BOOL;
-typedef enum grid {
-  ROAD = 0,  // 路
-  OBSTACLE = 1,  // 障碍
-  START = 2,  // 起点
-  TARGET = 3,  // 目标
-  VISITED = 4,  // 被访问
-  PATH = 5  // 路径
-} GRID;  // 地图格
-typedef struct map {
-  GRID **data;  // 地图数据
-  int width,height;  // 地图尺寸
-} MAP;  // 地图
-// 
-#include <stdio.h>
-#include <malloc.h>
-
+#include "mapSystem.h"
 BOOL getBfsPath(MAP map) {
   if(!map.data) return FALSE;
   // 寻找起点和目标
@@ -105,65 +86,15 @@ BOOL getBfsPath(MAP map) {
   map.data[targetX][targetY] = TARGET;
   return TRUE;
 }
-BOOL setGridData(MAP map,int x,int y,GRID type) {
-  if(!map.data) return FALSE;
-  else if(x < 0 || x >= map.width ||
-  y < 0 || y >= map.height) return FALSE;
-  else {
-    map.data[x][y] = type;
-    return TRUE;
-  }
-}
-BOOL showMap(MAP map) {
-  int i = 0,j = 0;
-  char symbolList[6] = {'0','#','@','@','0','+'};
-  for(i = 0;i < map.height;i++) {
-    for(j = 0;j < map.width;j++) {
-      printf("%c ",symbolList[map.data[j][i]]);
-    }
-    printf("\n");
-  }
-}
-BOOL createMap(MAP *map) {
-  if(map->width <= 0 || map->height <= 0) return FALSE;
-  // 每个地图格默认赋值为ROAD
-  GRID **col = (GRID**)malloc(sizeof(GRID*) * map->width);
-  int i = 0,j = 0;
-  for(;i < map->width;i++) {
-    GRID *row = (GRID*)malloc(sizeof(GRID) * map->height);
-    for(j = 0;j < map->height;j++) {
-      row[j] = ROAD;
-    }
-    col[i] = row;
-  }
-  // 传出地图
-  map->data = col;
-  return TRUE;
-}
+
 int main() {
-  MAP map = {NULL,11,11};
+  MAP map = {NULL,NULL,11,11};
   createMap(&map);
-  setGridData(map,0,3,START);
-  setGridData(map,10,2,TARGET);
   
-  setGridData(map,1,0,OBSTACLE);
-  setGridData(map,1,1,OBSTACLE);
-  setGridData(map,1,2,OBSTACLE);
-  setGridData(map,1,3,OBSTACLE);
-  setGridData(map,1,4,OBSTACLE);
-  setGridData(map,1,5,OBSTACLE);
-  setGridData(map,1,6,OBSTACLE);
-  
-  setGridData(map,2,3,OBSTACLE);
-  setGridData(map,3,3,OBSTACLE);
-  setGridData(map,4,3,OBSTACLE);
-  setGridData(map,5,3,OBSTACLE);
-  setGridData(map,6,3,OBSTACLE);
-  setGridData(map,7,3,OBSTACLE);
-  setGridData(map,8,3,OBSTACLE);
-  setGridData(map,9,3,OBSTACLE);
-  setGridData(map,10,3,OBSTACLE);
-  
+  setGridData(map,3,5,START);
+  setGridData(map,10,10,TARGET);
+  //obstacleGenerator(map,30);
+  //showMap(map);
   getBfsPath(map);
   showMap(map);
 }
