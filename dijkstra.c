@@ -47,11 +47,11 @@ BOOL getDijkstraPath(MAP map) {
   }
   void updateParent(int x,int y,int parent) {
     int k = 0;
-    while(triple[k].x != x || triple[k].y != y) i++;
+    while(triple[k].x != x || triple[k].y != y) k++;
     triple[k].parent = parent;
   }
-  // 是否可斜着走
-  BOOL isBevelAccess(int srcX,int srcY,int dstX,int dstY) {
+  // 斜着是否可通过
+  BOOL isDiagonalAccess(int srcX,int srcY,int dstX,int dstY) {
     int distX = dstX - srcX,
     distY = dstY - srcY;
     // 不为斜着走
@@ -75,7 +75,7 @@ BOOL getDijkstraPath(MAP map) {
       else if(gridData == START) return FALSE;
       // 不为已访问、障碍、起点
       else {
-        return isBevelAccess(srcX,srcY,dstX,dstY);
+        return isDiagonalAccess(srcX,srcY,dstX,dstY);
       }
     }
   }
@@ -107,17 +107,17 @@ BOOL getDijkstraPath(MAP map) {
           // 比较旧新路径
           if(map.weight[neighborX][neighborY] > (map.weight[currentX][currentY] +
           offsetWeight[j]) ) {
+			  
             // 新路径小，更新路径长度和父节点
             map.weight[neighborX][neighborY] = map.weight[currentX][currentY] +
           offsetWeight[j];
-            updateParent(neighborX,neighborY,i);
+		    updateParent(neighborX,neighborY,i);
           }
+		  
         }
       }  // isAccess end
     }
     i++;
-    //system("clear");
-    
     // 起点与目标被隔断
     if(i == tripleIndex) return FALSE;
     // 更新当前点
@@ -125,7 +125,6 @@ BOOL getDijkstraPath(MAP map) {
     currentY = triple[i].y;
     map.data[currentX][currentY] = VISITED;
   }
-  printf("Search done!\n");
   // 回溯标记路径
   while(i != -1) {
     map.data[currentX][currentY] = PATH;
@@ -141,16 +140,12 @@ BOOL getDijkstraPath(MAP map) {
 int main() {
   MAP map = {NULL,NULL,10,10};
   createMap(&map);
-  setGridData(map,0,0,START);
-  setGridData(map,9,9,TARGET);
+  setGridData(map,4,4,START);
+  setGridData(map,7,7,TARGET);
   
-  obstacleGenerator(map,20);
+  //obstacleGenerator(map,20);
   
-  showMap(map);
-  printf("\n");
   getDijkstraPath(map);
-  //system("clear");
   showMap(map);
-  
   destroyMap(&map);
 }

@@ -67,6 +67,8 @@ BOOL getBfsPath(MAP map) {
       }
     }
     i++;
+	system("cls");
+	showMap(map);
     // 起点与目标被隔断
     if(i == tripleIndex) return FALSE;
     // 更新当前点
@@ -91,10 +93,11 @@ int main() {
   MAP map = {NULL,NULL,11,11};
   createMap(&map);
   
-  setGridData(map,3,5,START);
-  setGridData(map,10,10,TARGET);
+  setGridData(map,5,5,START);
+  setGridData(map,7,7,TARGET);
   //obstacleGenerator(map,30);
   //showMap(map);
   getBfsPath(map);
+  system("cls");
   showMap(map);
 }
