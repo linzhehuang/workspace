@@ -5,6 +5,7 @@
 #include <termios.h>
 #include <pthread.h>
 #include <string.h>
+#include <sys/time.h>
 
 typedef struct _Grid {
   unsigned int x, y;
@@ -34,9 +35,16 @@ int getch() {
     return c;
 }
 
-void delay(long second) {
-  time_t timer = time(NULL) + second;
-  while (time(NULL) < timer);
+void delay(long ms) {
+  struct timeval begin, now;
+  gettimeofday(&begin, NULL);
+  
+  for (;;) {
+    gettimeofday(&now, NULL);
+    long dist = (now.tv_sec - begin.tv_sec) * 1000;
+    dist += (now.tv_usec -begin.tv_usec) / 1000;
+    if (dist > ms) break;
+  }
 }
 
 int canPlace(int x, int y, Snake* s) {
@@ -227,7 +235,7 @@ int main(void) {
   
   while (isRun) {
     drawFrame(&snake, &food, mapW, mapH);
-    delay(1);
+    delay(400);
     moveSnake(&snake, direction, isGrow);
     if (isGrow == 1) isGrow = 0;
     if (isEatFood(snake.body[0], food) == 1) {
@@ -241,6 +249,7 @@ int main(void) {
   }
 
   printf("Game over!\n");
+  // pthread_cancel() unsupport in android.
   pthread_cancel(listener_tid);
   pthread_join(listener_tid, NULL);
 
