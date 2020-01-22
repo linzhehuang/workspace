@@ -17,6 +17,7 @@ typedef struct _Snake {
 } Snake;
 
 int direction = 1;
+int dirLock = 0;
 int isRun = 1;
 
 int getch() {
@@ -187,25 +188,38 @@ void drawFrame(Snake* s, Grid* f, int w, int h) {
 void* keyEventListener(void* arg) {
   int c;
   while (isRun) {
+    while (dirLock);
     c = getch();
     if (c == 'q') isRun = 0;
     else {
       switch (c) {
       case 'w':
       case '2':
-        direction = (direction == 2)? direction: 0;
+        if (direction != 2) { 
+          direction = 0;
+          dirLock = 1;
+        }
       break;
       case 'd':
       case '6':
-        direction = (direction == 3)? direction: 1;
+        if (direction != 3) { 
+          direction = 1;
+          dirLock = 1;
+        }
       break;
       case 's':
       case '8':
-        direction = (direction == 0)? direction: 2;
+        if (direction != 0) { 
+          direction = 2;
+          dirLock = 1;
+        }
       break;
       case 'a':
       case '4':
-        direction = (direction == 1)? direction: 3;
+        if (direction != 1) { 
+          direction = 3;
+          dirLock = 1;
+        }
       break;
       default:
       continue;
@@ -237,6 +251,7 @@ int main(void) {
     drawFrame(&snake, &food, mapW, mapH);
     delay(400);
     moveSnake(&snake, direction, isGrow);
+    if (dirLock == 1) dirLock = 0;
     if (isGrow == 1) isGrow = 0;
     if (isEatFood(snake.body[0], food) == 1) {
       isGrow = 1;
@@ -250,7 +265,7 @@ int main(void) {
 
   printf("Game over!\n");
   // pthread_cancel() unsupport in android.
-  pthread_cancel(listener_tid);
+  //pthread_cancel(listener_tid);
   pthread_join(listener_tid, NULL);
 
   return 0;
